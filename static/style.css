@@ -1,0 +1,353 @@
+/* Set the background image for the body of the page, and make sure it covers the whole page without repeating */
+body {
+  background-image: url("../static/Images.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Style the navigation bar with a green background and space out its elements horizontally */
+nav {
+  background-color: green;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+/* Remove list style (bullets) from unordered lists inside the navigation bar */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Display list items inside the navigation bar as inline elements */
+nav li {
+  display: inline-block;
+  position: relative;
+}
+
+/* Set the color of links inside the navigation bar to white, and remove the underline */
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+/* Hide the dropdown menu by default */
+nav li ul.dropdown {
+  display: none;
+  background-color: green;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+/* Display the dropdown menu when hovering over its parent list item */
+nav li:hover ul.dropdown {
+  display: block;
+}
+
+/* Add a margin to the right of the right-menu unordered list inside the navigation bar */
+nav ul.right-menu {
+  margin-right: 1rem;
+}
+
+/* Set the color of the text in main h1 and h2 elements, and footer paragraphs to white */
+main h1, main h2, footer p {
+  color: white;
+}
+
+/* Set the color of the text in list items inside the right-menu unordered list to white */
+nav ul.right-menu li {
+  color: white;
+}
+
+/* Set the color of the text in labels to white */
+label {
+  color: white;
+}
+
+
+nav li ul.dropdown li {
+  padding: 0.5rem 0; /* Add padding to the top and bottom */
+  transition: background-color 0.2s ease-in-out; /* Add a transition for the background-color change */
+}
+
+nav li ul.dropdown li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Change the background color on hover */
+}
+
+/* Change the color of the month and date text in FullCalendar to white */
+.fc-toolbar h2 {
+  color: white !important;
+}
+
+/* Change the color of the day names in FullCalendar to white */
+.fc-day-header {
+  color: white !important;
+}
+
+
+/* Change the color of the day names to white */
+#calendar .fc th {
+  color: white !important;
+}
+
+/* Change the color of the dates to white */
+#calendar .fc-day-number {
+  color: rgb(255, 255, 255) !important;
+}
+
+.welcome-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem; /* Add some space at the top */
+  padding: 2rem;
+  background-color: hsla(0, 0%, 0%, 0.281); /* Add a semi-transparent background */
+  border-radius: 10px; /* Add rounded corners */
+  color: white;
+}
+
+.welcome-text {
+  flex: 1;
+  max-width: 50%;
+}
+
+.welcome-image {
+  flex: 1;
+  max-width: 50%;
+}
+
+.how-it-works-section {
+  background-color: rgba(0, 128, 77, 0.309); /* Change the color here */
+  border-radius: 10px; /* Add rounded corners */
+  padding: 2rem;
+  margin-top: 2rem; /* Add some space at the top */
+}
+
+.how-it-works-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.step {
+  background-color: rgba(255, 255, 255, 0.1); /* Add a semi-transparent background */
+  border-radius: 10px; /* Add rounded corners */
+  padding: 1rem;
+  flex: 1;
+  min-width: 200px; /* Adjust this value based on your preferred minimum width */
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.step-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.step-signup-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.step-signup-button:hover {
+  background-color: darkgreen;
+}
+
+.benefits-coaches-image {
+  width: 100%; /* image size */
+  max-width: 300px; /* image width */
+  margin-bottom: 1rem; /* Add space below the image */
+}
+
+.benefits-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.benefits-coaches,
+.benefits-clients {
+  background-color: rgba(255, 255, 255, 0.255);
+  border-radius: 10px;
+  padding: 1rem;
+  flex: 1;
+  margin-top: 2rem; /* to move the sections down */
+  margin-left: 1rem; /* to move the sections to the left */
+  margin-bottom: 1rem;
+  max-width: 48%;
+}
+
+
+/* Set the maximum width and center the signup form, with some padding and a transparent background color */
+.signup-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: rgba(12, 1, 1, 0);
+  border-radius: 4px;
+}
+
+/* Style the form group with a flex container and some margin */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+/* Add some margin below the label elements */
+label {
+  margin-bottom: 0.5rem;
+}
+
+/* Style the text, email, password input fields and select element with padding, border, background color and font size */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+}
+
+/* Style the signup button with padding, background color, font size, and transition effect */
+.signup-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Change the background color of the signup button on hover */
+.signup-button:hover {
+  background-color: darkgreen;
+}
+
+/* Change the background color of the signup button on hover (duplicate rule, should be removed) */
+.signup-button:hover {
+  background-color: #0056b3;
+}
+
+/* Set the background color of the body */
+body {
+  background-color: rgba(0, 221, 255, 0.109);
+}
+
+/* Center align the text in the heading */
+.centered-heading {
+  text-align: center;
+}
+
+/* Set the maximum width and center the login form */
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Styling for the form-group class: Organizing form elements in a column layout and adding margin */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+/* Styling for label elements: Adding margin below each label */
+label {
+  margin-bottom: 0.5rem;
+}
+
+/* Style the text, password, and email input fields */
+input[type="text"], input[type="password"], input[type="email"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+/* Set the cursor of the button to a pointer */
+button {
+  cursor: pointer;
+}
+
+/* Style the login button with background color, text color, border, padding, font size, and line height */
+.login-button {
+  background-color: #00ff3ca2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  text-align: center;
+  display: inline-block;
+}
+
+/* error message color */
+.error-message {
+  text-align: center;
+  color: rgb(236, 22, 22);
+}
+
+/* Change the background color of the login button on hover */
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* Style the modal, hidden by default, with a fixed position, width, height, and semi-transparent background color */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Style the modal content with a white background color, centered positioning, padding, border, and width */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+}
+
+/* Style the close button with a gray color, positioned to the right, and with font size and weight */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Change the color of the close button on hover and focus, and set the cursor to a pointer */
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

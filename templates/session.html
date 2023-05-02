@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Sessions
+{% endblock %}
+
+{% block content %}
+  <h1>Available Sessions</h1>
+
+  <div class="sessions-list">
+    {% for session in sessions %}
+      <div class="session">
+        <h2>{{ session.date_time.strftime("%B %d, %Y") }}</h2>
+        <p>Coach: {{ session.first_name }} {{ session.last_name }}</p>
+        <p>Location: {{ session.location }}</p>
+        <p>Price: ${{ session.price }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

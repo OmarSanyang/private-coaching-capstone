@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - My Private Coaching{% endblock %}
+
+{% block content %}
+    <section class="welcome-section">
+        <div class="welcome-text">
+            <h1>Welcome to CoachConnect!</h1>
+            <p>The ultimate coaching marketplace where talented coaches and clients come together to grow and achieve success. Whether you're a coach looking to share your expertise or a client seeking personalized guidance, you've come to the right place.</p>
+        </div>
+        <img src="{{ url_for('static', filename='Images.jps.jpg') }}" alt="Soccer coaching session" class="welcome-image">
+    </section>
+    
+    <section class="how-it-works-section">
+        <h2>How It Works</h2>
+        <div class="how-it-works-steps">
+            <div class="step">
+                <div class="step-icon">1</div>
+                <h3>Sign Up</h3>
+                <p>Create a free account as a coach or a client.</p>
+                <a href="{{ url_for('signup') }}" class="step-signup-button">Sign Up</a>
+              </div>
+          <div class="step">
+            <div class="step-icon">2</div>
+            <h3>Find a Coach/Client</h3>
+            <p>Search through our extensive list of coaches to find the perfect match for your needs, or as a coach, browse clients looking for coaching services.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">3</div>
+            <h3>Book a Session</h3>
+            <p>Choose a convenient date and time to schedule a coaching session.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">4</div>
+            <h3>Conduct the Session</h3>
+            <p>Connect with your coach or client through our platform and start your coaching journey.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">5</div>
+            <h3>Review & Feedback</h3>
+            <p>After the session, share your feedback and rate your experience to help others make informed decisions.</p>
+          </div>
+        </div>
+    </section>
+
+      <section class="benefits-section">
+        <h2>Benefits</h2>
+        <div class="benefits-coaches">
+            <h3>For Coaches</h3>
+            <img src="{{ url_for('static', filename='IMG_0294.jpg') }}" alt="Image for coaches" class="benefits-coaches-image">
+            <ul>
+              <li>Gain access to a wide range of clients and expand your coaching business.</li>
+              <li>Manage your bookings and schedules in one centralized platform.</li>
+              <li>Receive payments securely and efficiently through our integrated payment system.</li>
+              <li>Build your reputation with verified reviews and ratings from clients.</li>
+              <li>Utilize our marketing tools and resources to promote your coaching services.</li>
+            </ul>
+          </div>
+        <div class="benefits-clients">
+          <h3>For Clients</h3>
+          <ul>
+            <li>Find the perfect coach tailored to your specific needs and goals.</li>
+            <li>Compare coaches based on verified reviews, ratings, and pricing.</li>
+            <li>Easily book and reschedule sessions through our user-friendly interface.</li>
+            <li>Communicate directly with your coach via our secure messaging system.</li>
+            <li>Track your progress and achievements throughout your coaching journey.</li>
+          </ul>
+        </div>
+      </section>
+
+  <section class="featured-coaches-section">
+    <h2>Featured Coaches</h2>
+    <!-- Showcase a selection of top-rated or featured coaches -->
+  </section>
+
+  <section class="testimonials-section">
+    <h2>Testimonials</h2>
+    <!-- Include testimonials from both coaches and clients -->
+  </section>
+
+  <section class="cta-section">
+    <h2>Get Started Today</h2>
+    <a href="{{ url_for('signup') }}" class="cta-button">Sign Up as a Coach</a>
+    <a href="{{ url_for('signup') }}" class="cta-button">Sign Up as a Client</a>
+  </section>
+
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <!-- Address common questions and concerns -->
+  </section>
+
+  <section class="contact-section">
+    <h2>Contact Us</h2>
+    <!-- Provide contact information -->
+  </section>
+{% endblock %}
+

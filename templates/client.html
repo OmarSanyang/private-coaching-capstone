@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Client Dashboard
+{% endblock %}
+
+{% block extra_css %}
+  <!-- Add FullCalendar dependencies -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+{% endblock %}
+
+{% block content %}
+  <h1>Welcome, {{ client_name.first_name }} {{ client_name.last_name }}!</h1>
+  <h2>Available Sessions</h2>
+
+  <div>
+    <form id="search-form">
+      <label for="search-query">Search for a coach by ID:</label>
+      <input type="text" id="search-query" name="search_query" placeholder="Enter coach ID">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <div id="calendar"></div>
+
+  <!-- Add a modal for booking a session -->
+  <div id="booking-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Book Session</h2>
+      <p>Are you sure you want to book this session?</p>
+      <button id="book-session-btn">Book Session</button>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Add FullCalendar dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <!-- Initialize FullCalendar -->
+  <script>
+    $(document).ready(function() {
+      // Fetch and display sessions on the calendar
+      function fetchSessions(coach_query, callback) {
+        console.log("Fetching sessions...");
+        var url = "{{ url_for('get_sessions') }}";
+        if (coach_query) {
+          url += "/" + encodeURIComponent(coach_query);
+        }
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          success: function(data) {
+            console.log("Received data:", data);  // Log the received data
+
+            var events = data.map(function(session) {
+              return {
+                title: session.location + " - $" + session.price,
+                start: moment(session.date_time).format(),
+                session_id: session.id,
+              };
+            });
+
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', events);
+
+            if (callback) {
+              callback();
+            }
+          },
+        });
+      }
+      
+// Initialize FullCalendar
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay',
+    },
+    defaultView: 'month',
+    eventTextColor: 'white',
+    eventRender: function(event, element) {
+      if (event.title.includes(' - Pending')) {
+        element.css('background-color', '#808080');
+    }
+  },
+    eventClick: function(calEvent, jsEvent, view) {
+  // Show the booking modal
+  var modal = document.getElementById('booking-modal');
+  modal.style.display = 'block';
+
+  // Handle the booking button click
+  $('#book-session-btn').off().click(function() {
+    // Send a request to book the session
+    var session_id = calEvent.session_id;
+    console.log('Booking session:', session_id);
+
+    $.ajax({
+      url: "{{ url_for('book_session') }}",
+      type: "POST",
+      data: {
+        session_id: session_id,
+        client_id: "{{ session['user_id'] }}"
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log('Session booked successfully');
+          // Update the calendar event to display the "Pending" status and change its color
+          calEvent.title = calEvent.title + " - Pending";
+          calEvent.color = '#808080';
+          $('#calendar').fullCalendar('updateEvent', calEvent);
+      } else {
+          console.log('Failed to book session:', response.message);
+      }
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        console.log('Error booking session:', textStatus, errorThrown);
+      }
+    });
+
+    // Close the modal
+    modal.style.display = 'none';
+  });
+
+  // Close the modal when the user clicks the "close" button
+  $('.close').click(function() {
+    modal.style.display = 'none';
+  });
+}
+});
+
+// Handle the search form submission
+  $('#search-form').submit(function(e) {
+    e.preventDefault();
+
+    var coach_id = $('#search-query').val();
+    if (coach_id) {
+      fetchSessions(coach_id, function() {
+        console.log('Fetched sessions for coach:', coach_id);
+      });
+    } else {
+      fetchSessions();
+    }
+  });
+
+    // Fetch and display the initial list of sessions
+    fetchSessions();
+    });
+  </script>
+{% endblock %}

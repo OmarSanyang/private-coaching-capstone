@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Coach Dashboard
+{% endblock %}
+
+{% block extra_css %}
+  <!-- Add FullCalendar dependencies -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+{% endblock %}
+
+{% block content %}
+  <h1>Welcome Coach {{ coach_name.first_name }}!</h1>
+  
+  <h2>Add Session</h2>
+  <form id="add-session-form">
+    <input type="hidden" name="session_id">
+    <label for="date">Date:</label>
+    <input type="date" name="date" required>
+    <label for="time">Time:</label>
+    <input type="time" name="time" required>
+    <label for="location">Location:</label>
+    <input type="text" name="location" required>
+    <label for="price">Price:</label>
+    <input type="number" name="price" step="0.01" required>
+    <button type="submit">Save</button>
+  </form>
+  
+  <h2>Schedule</h2>
+  <div id="calendar"></div>
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Add FullCalendar dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+  <!-- Initialize FullCalendar -->
+  <script>
+    $(document).ready(function() {
+      // Fetch and display sessions on the calendar
+      function fetchSessions(callback) {
+        console.log("Fetching sessions...");
+        $.ajax({
+          url: "{{ url_for('get_sessions') }}",
+          type: "GET",
+          success: function(data) {
+            console.log("Received data:", data);  // Log the received data
+
+            var events = data.map(function(session) {
+              return {
+                title: session.location + " - $" + session.price,
+                start: moment(session.date_time).format(),
+                session_id: session.id,
+              };
+            });
+
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', events);
+
+            if (callback) {
+              callback();
+            }
+          },
+        });
+      }
+
+      // Initialize FullCalendar
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay',
+        },
+        defaultView: 'month',
+        eventTextColor: 'white',
+      });
+
+      // Call the fetchSessions function when the document is ready
+      fetchSessions();
+
+      $('#add-session-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Get form data
+        const date = $('input[name="date"]').val();
+        const time = $('input[name="time"]').val();
+        const location = $('input[name="location"]').val();
+        const price = $('input[name="price"]').val();
+
+        // Combine date and time into a single DateTime string
+        const dateTime = moment(`${date}T${time}`).format();
+
+      // Get the session_id from the hidden input field
+        const sessionId = $('input[name="session_id"]').val();
+
+        // Update the AJAX call
+        $.ajax({
+          url: "{{ url_for('add_session') }}",
+          type: "POST",
+          data: {
+            session_id: sessionId,
+            coach_id: "{{ coach_id }}",
+            date_time: dateTime,
+            location: location,
+            price: price,
+          },
+          success: function() {
+            // Create an event object
+            const event = {
+              title: location + " - $" + price,
+              start: dateTime,
+            };
+
+            // Add the event to the calendar
+            $('#calendar').fullCalendar('renderEvent', event, true);
+
+            // Clear the form fields
+            $('input[name="date"]').val('');
+            $('input[name="time"]').val('');
+            $('input[name="location"]').val('');
+            $('input[name="price"]').val('');
+          },
+        });
+      });
+    });
+  </script>
+{% endblock %}

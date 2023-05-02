@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="left-menu">
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+        </ul>
+        <ul class="center-menu">
+          <li>
+            <a href="{{ url_for('home') }}" class="logo">
+              <span>CoachConnect</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="right-menu">
+          {% if session['user_id'] %}
+          <li>Welcome, {{ session['first_name'] }}!</li>
+          <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          {% else %}
+          <li>
+            <a href="#">My Account</a>
+            <ul class="dropdown">
+              <li><a href="{{ url_for('login') }}">Log In</a></li>
+              <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <p>&copy; 2023 My Private Coaching</p>
+    </footer>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
+
+
+
